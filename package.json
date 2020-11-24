@@ -1,0 +1,15 @@
+{
+  "name": "fua.core.util",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/core.util.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@git02.int.nsc.ag:10022/Research/fua/lib/core.util.git"
+  },
+  "author": "spetrac@nicos-ag.com",
+  "license": ""
+}
