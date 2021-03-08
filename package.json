@@ -1,15 +1,19 @@
 {
-  "name": "fua.core.util",
+  "name": "@nrd/fua.core.util",
   "version": "1.0.0",
   "description": "",
   "main": "src/core.util.js",
+  "devDependencies": {
+    "mocha": "^8.2.1",
+    "expect": "^26.6.2"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
     "url": "ssh://git@git02.int.nsc.ag:10022/Research/fua/lib/core.util.git"
   },
   "author": "spetrac@nicos-ag.com",
-  "license": ""
+  "license": "UNLICENSED"
 }
