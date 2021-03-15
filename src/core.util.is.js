@@ -46,7 +46,8 @@ _.isNumber = function (value) {
  * @returns {boolean}
  */
 _.isInteger = function (value) {
-    return _.isNumber(value) && value === parseInt(value);
+    //return _.isNumber(value) && value === parseInt(value);
+    return Number.isInteger(value);
 };
 
 /**
@@ -102,4 +103,29 @@ _.isIterable = function (value) {
 _.isDate = function (value) {
     return value && value instanceof Date
         && !isNaN(value.valueOf());
+};
+
+/**
+ * @param {Error|any} value
+ * @returns {boolean}
+ */
+_.isError = function (value) {
+    return value instanceof Error;
+};
+
+/**
+ * @param {Buffer|any} value
+ * @returns {boolean}
+ */
+_.isBuffer = function (value) {
+    return value instanceof Buffer;
+};
+
+/**
+ * @param {TypedArray|any} value
+ * @returns {boolean}
+ */
+_.isTypedArray = function (value) {
+    // TODO check and improve
+    return ArrayBuffer.isView(value) && !(value instanceof DataView);
 };
