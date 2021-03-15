@@ -28,6 +28,9 @@ _.validate = function (value, rule) {
             _.isObject(value) && Object.entries(rule.properties).every(
                 ([key, subRule]) => _.validate(value[key], subRule)
             )
+        ))
+        && (!rule.not || (
+            !_.validate(value, rule.not)
         ));
 };
 
