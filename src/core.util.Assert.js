@@ -1,18 +1,20 @@
 const
-    _ = require('./core.util.js');
+    _              = require('./core.util.js'),
+    defaultSource  = 'unspecified source',
+    defaultMessage = 'unspecified error';
 
 /**
  * @param source
  * @returns {function(any, string, class<Error>?): void}
  * @constructor
  */
-exports.Assert = function (source = 'unspecified source') {
+exports.Assert = function (source = defaultSource) {
     /**
      * @param {any} value
      * @param {string} errMsg
      * @param {class<Error>} [errType]
      */
-    function assert(value, errMsg = 'unspecified error', errType = Error) {
+    function assert(value, errMsg = defaultMessage, errType = Error) {
         if (!value) {
             const err = new errType(source + ' : ' + errMsg);
             Error.captureStackTrace(err, assert);
@@ -27,6 +29,8 @@ exports.Assert = function (source = 'unspecified source') {
  * TODO what is the preferred behaviour?
  * 1. a default assert with 'unspecified source' (current)
  * 2. a hint to the developer to use its own assert (below)
+ * @type {function(*, string, class<Error>=): void}
+ * @deprecated
  */
 exports.assert = exports.Assert();
 
