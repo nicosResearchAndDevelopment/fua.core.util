@@ -1,7 +1,7 @@
 const
     _ = require('./core.util.js');
 
-_.validate = function (value, rule) {
+exports.validate = function (value, rule) {
     return rule
         && (!rule.type || (
             _.isArray(rule.type)
@@ -39,7 +39,7 @@ _.validate = function (value, rule) {
  * @returns {function(string|any): boolean}
  * @constructor
  */
-_.StringValidator = function (pattern) {
+exports.StringValidator = function (pattern) {
     /**
      * @param {string|any} value
      * @returns {boolean}
@@ -56,7 +56,7 @@ _.StringValidator = function (pattern) {
  * @returns {function(Array|any): boolean}
  * @constructor
  */
-_.ArrayValidator = function (checker) {
+exports.ArrayValidator = function (checker) {
     /**
      * @param {Array|any} value
      * @returns {boolean}
@@ -68,7 +68,7 @@ _.ArrayValidator = function (checker) {
     return arrayValidator;
 };
 
-//_.SchemaValidator = function () {
+//exports.SchemaValidator = function () {
 //    // TODO http://json-schema.org/specification.html
 //    const schema = {
 //        $schema:     null,

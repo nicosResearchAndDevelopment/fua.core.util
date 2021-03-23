@@ -6,7 +6,7 @@ const
  * @returns {function(any, string, class<Error>?): void}
  * @constructor
  */
-_.Assert = function (source = 'unspecified source') {
+exports.Assert = function (source = 'unspecified source') {
     /**
      * @param {any} value
      * @param {string} errMsg

@@ -7,6 +7,6 @@ const
  * @param {string} [flags]
  * @returns {RegExp}
  */
-_.stringToRegExp = function (string, flags) {
+exports.stringToRegExp = function (string, flags) {
     return new RegExp(string.replace(RE_unsafeRegExpChars, (match) => '\\' + match), flags);
 };

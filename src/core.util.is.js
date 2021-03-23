@@ -5,7 +5,7 @@ const
  * @param {any} value
  * @returns {boolean}
  */
-_.isDefined = function (value) {
+exports.isDefined = function (value) {
     return value !== void 0;
 };
 
@@ -13,7 +13,7 @@ _.isDefined = function (value) {
  * @param {true|any} value
  * @returns {boolean}
  */
-_.isTruthy = function (value) {
+exports.isTruthy = function (value) {
     return !!value;
 };
 
@@ -21,7 +21,7 @@ _.isTruthy = function (value) {
  * @param {false|any} value
  * @returns {boolean}
  */
-_.isFalsy = function (value) {
+exports.isFalsy = function (value) {
     return !value;
 };
 
@@ -29,7 +29,7 @@ _.isFalsy = function (value) {
  * @param {boolean|any} value
  * @returns {boolean}
  */
-_.isBoolean = function (value) {
+exports.isBoolean = function (value) {
     return typeof value === 'boolean';
 };
 
@@ -37,7 +37,7 @@ _.isBoolean = function (value) {
  * @param {number|any} value
  * @returns {boolean}
  */
-_.isNumber = function (value) {
+exports.isNumber = function (value) {
     return typeof value === 'number' && !isNaN(value);
 };
 
@@ -45,7 +45,7 @@ _.isNumber = function (value) {
  * @param {number|any} value
  * @returns {boolean}
  */
-_.isInteger = function (value) {
+exports.isInteger = function (value) {
     //return _.isNumber(value) && value === parseInt(value);
     return Number.isInteger(value);
 };
@@ -54,7 +54,7 @@ _.isInteger = function (value) {
  * @param {string|any} value
  * @returns {boolean}
  */
-_.isString = function (value) {
+exports.isString = function (value) {
     return typeof value === 'string';
 };
 
@@ -62,7 +62,7 @@ _.isString = function (value) {
  * @param {symbol|any} value
  * @returns {boolean}
  */
-_.isSymbol = function (value) {
+exports.isSymbol = function (value) {
     return typeof value === 'symbol';
 };
 
@@ -70,7 +70,7 @@ _.isSymbol = function (value) {
  * @param {Function|any} value
  * @returns {boolean}
  */
-_.isFunction = function (value) {
+exports.isFunction = function (value) {
     return typeof value === 'function';
 };
 
@@ -78,7 +78,7 @@ _.isFunction = function (value) {
  * @param {Object|any} value
  * @returns {boolean}
  */
-_.isObject = function (value) {
+exports.isObject = function (value) {
     return value && typeof value === 'object';
 };
 
@@ -86,13 +86,13 @@ _.isObject = function (value) {
  * @param {Array|any} value
  * @returns {boolean}
  */
-_.isArray = Array.isArray;
+exports.isArray = Array.isArray;
 
 /**
  * @param {Iterable|any} value
  * @returns {boolean}
  */
-_.isIterable = function (value) {
+exports.isIterable = function (value) {
     return value && _.isFunction(value[Symbol.iterator]);
 };
 
@@ -100,7 +100,7 @@ _.isIterable = function (value) {
  * @param {Date|any} value
  * @returns {boolean}
  */
-_.isDate = function (value) {
+exports.isDate = function (value) {
     return value && value instanceof Date
         && !isNaN(value.valueOf());
 };
@@ -109,7 +109,7 @@ _.isDate = function (value) {
  * @param {Error|any} value
  * @returns {boolean}
  */
-_.isError = function (value) {
+exports.isError = function (value) {
     return value instanceof Error;
 };
 
@@ -117,7 +117,7 @@ _.isError = function (value) {
  * @param {Buffer|any} value
  * @returns {boolean}
  */
-_.isBuffer = function (value) {
+exports.isBuffer = function (value) {
     return value instanceof Buffer;
 };
 
@@ -125,7 +125,7 @@ _.isBuffer = function (value) {
  * @param {TypedArray|any} value
  * @returns {boolean}
  */
-_.isTypedArray = function (value) {
+exports.isTypedArray = function (value) {
     // TODO check and improve
     return ArrayBuffer.isView(value) && !(value instanceof DataView);
 };
