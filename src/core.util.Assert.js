@@ -22,3 +22,5 @@ exports.Assert = function (source = 'unspecified source') {
 
     return assert;
 };
+
+exports.assert = exports.Assert();
