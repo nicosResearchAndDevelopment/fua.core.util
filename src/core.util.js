@@ -1,3 +1,6 @@
+const constants = require('./core.util.constants.js');
+Object.assign(exports, constants);
+
 const is = require('./core.util.is.js');
 Object.assign(exports, is);
 
@@ -14,6 +17,7 @@ const convert = require('./core.util.convert.js');
 Object.assign(exports, convert);
 
 module.exports = Object.freeze({
+    ...constants,
     ...is,
     ...valid,
     ...assert,

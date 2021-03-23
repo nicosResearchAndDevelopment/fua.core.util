@@ -23,4 +23,17 @@ exports.Assert = function (source = 'unspecified source') {
     return assert;
 };
 
+/**
+ * TODO what is the preferred behaviour?
+ * 1. a default assert with 'unspecified source' (current)
+ * 2. a hint to the developer to use its own assert (below)
+ */
 exports.assert = exports.Assert();
+
+///**
+// * @throws {Error}
+// */
+//exports.assert = function () {
+//    throw new Error('core.util : this is not the assert of your module \n'
+//        + 'Please create a util.Assert instance by yourself or use your existing one!');
+//};
