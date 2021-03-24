@@ -32,6 +32,35 @@ exports.lockAllProp = function (obj, depth = 0) {
 };
 
 /**
+ * A default lock defines a one-time setter on every key with the existing value as default.
+ * @param {Object} obj
+ * @param {...string} keys
+ */
+exports.defaultLockProp = function (obj, ...keys) {
+    for (let key of keys) {
+        const writable = !obj.hasOwnProperty(key) || Reflect.getOwnPropertyDescriptor(obj, key).configurable;
+        if (writable) {
+            let
+                current  = obj[key],
+                assigned = false;
+            Object.defineProperty(obj, key, {
+                configurable: false,
+                get() {
+                    return current;
+                },
+                set(value) {
+                    if (!assigned) {
+                        assigned = true;
+                        current  = value;
+                    }
+                }
+            });
+        }
+    }
+    return _;
+};
+
+/**
  * @param {Object} obj
  * @param {...string} keys
  */
