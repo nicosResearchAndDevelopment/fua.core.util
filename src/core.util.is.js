@@ -6,7 +6,8 @@ const
  * @returns {boolean}
  */
 exports.isDefined = function (value) {
-    return value !== void 0;
+    //return value !== void 0; // REM got changed: look out for bugs
+    return (value ?? null) !== null;
 };
 
 /**
