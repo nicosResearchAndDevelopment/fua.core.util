@@ -6,8 +6,17 @@ const
  * @returns {boolean}
  */
 exports.isDefined = function (value) {
+    return value !== void 0; // REM got changed: look out for bugs
+    //return (value ?? null) !== null;
+};
+
+/**
+ * @param {undefined|null|any} value
+ * @returns {boolean}
+ */
+exports.isNull = function (value) {
     //return value !== void 0; // REM got changed: look out for bugs
-    return (value ?? null) !== null;
+    return (value ?? null) === null;
 };
 
 /**
@@ -43,6 +52,14 @@ exports.isNumber = function (value) {
 };
 
 /**
+ * @param {Array<Number>|any} value
+ * @returns {boolean}
+ */
+exports.isNumberArray = function (value) {
+    return _.isArray(value) && value.every(_.isNumber);
+};
+
+/**
  * @param {number|any} value
  * @returns {boolean}
  */
@@ -57,6 +74,14 @@ exports.isInteger = function (value) {
  */
 exports.isString = function (value) {
     return typeof value === 'string';
+};
+
+/**
+ * @param {Array<String>|any} value
+ * @returns {boolean}
+ */
+exports.isStringArray = function (value) {
+    return _.isArray(value) && value.every(_.isString);
 };
 
 /**
@@ -81,6 +106,14 @@ exports.isFunction = function (value) {
  */
 exports.isObject = function (value) {
     return value && typeof value === 'object';
+};
+
+/**
+ * @param {Array<Object>|any} value
+ * @returns {boolean}
+ */
+exports.isObjectArray = function (value) {
+    return _.isArray(value) && value.every(_.isObject);
 };
 
 /**
