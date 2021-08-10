@@ -5,14 +5,14 @@ const
 
 /**
  * @param source
- * @returns {function(any, string, class<Error>?): void}
+ * @returns {function(value: any, errMsg?: string, errType?: Class<Error>): void}
  * @constructor
  */
 exports.Assert = function (source = defaultSource) {
     /**
      * @param {any} value
-     * @param {string} errMsg
-     * @param {class<Error>} [errType]
+     * @param {string} [errMsg]
+     * @param {Class<Error>} [errType]
      */
     function assert(value, errMsg = defaultMessage, errType = Error) {
         if (!value) {
@@ -29,7 +29,7 @@ exports.Assert = function (source = defaultSource) {
  * TODO what is the preferred behaviour?
  * 1. a default assert with 'unspecified source' (current)
  * 2. a hint to the developer to use its own assert (below)
- * @type {function(*, string, class<Error>=): void}
+ * @type {function(value: *, errMsg?: string, errType?: Class<Error>): void}
  * @deprecated
  */
 exports.assert = exports.Assert();

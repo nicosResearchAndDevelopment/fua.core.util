@@ -37,4 +37,48 @@ describe('core.util', function () {
         expect(stringValidator('test123')).toBeFalsy();
     });
 
+    test('toArray', function () {
+        expect(typeof _.toArray).toBe('function');
+
+        expect(_.toArray('Hello World!')).toMatchObject(['Hello World!']);
+        expect(_.toArray(['Hello World!'])).toMatchObject(['Hello World!']);
+        expect(_.toArray()).toMatchObject([]);
+        expect(_.toArray(null)).toMatchObject([]);
+        expect(_.toArray(0)).toMatchObject([0]);
+        expect(_.toArray('')).toMatchObject(['']);
+        expect(_.toArray({0: ''})).toMatchObject([{0: ''}]);
+        expect(_.toArray([1, 2, 3])).toMatchObject([1, 2, 3]);
+
+        const
+            basic_iterator_fn = function* () {
+                for (let index = 1, max = 3; index <= max; index++) {
+                    yield index;
+                }
+            },
+            basic_iterator    = basic_iterator_fn(),
+            basic_iterable    = {
+                [Symbol.iterator]: basic_iterator_fn
+            };
+
+        expect(_.toArray(basic_iterator)).toMatchObject([1, 2, 3]);
+        expect(_.toArray(basic_iterable)).toMatchObject([1, 2, 3]);
+
+        const
+            custom_iterator_fn = function () {
+                let index = 1, max = 3;
+                return {
+                    next: () => (index <= max)
+                        ? {value: index++, done: false}
+                        : {value: undefined, done: true}
+                };
+            },
+            custom_iterator    = custom_iterator_fn(),
+            custom_iterable    = {
+                [Symbol.iterator]: custom_iterator_fn
+            };
+
+        expect(_.toArray(custom_iterator)).toMatchObject([1, 2, 3]);
+        expect(_.toArray(custom_iterable)).toMatchObject([1, 2, 3]);
+    });
+
 });
