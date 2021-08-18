@@ -81,4 +81,37 @@ describe('core.util', function () {
         expect(_.toArray(custom_iterable)).toMatchObject([1, 2, 3]);
     });
 
+    test('promify & promisify', async function () {
+
+        const
+            testObj = {msg: 'Hello World!'},
+            testFn  = function (arg0, arg1, cb) {
+                setTimeout(() => {
+                    try {
+                        if (this?.msg) {
+                            cb(null, this.msg);
+                        } else {
+                            const res = arg0 + arg1;
+                            cb(null, res);
+                        }
+                    } catch (err) {
+                        cb(err);
+                    }
+                }, 20);
+            }
+
+        expect(await _.promify(testFn, 1, 2)).toBe(3);
+        expect(await _.promify(testFn, '1', '2')).toBe('12');
+        expect(await _.promify(testFn, '1', '2')).toBe('12');
+        expect(await _.promify.call(testObj, testFn, '1', '2')).toBe('Hello World!');
+
+        const testWrap = _.promisify(testFn);
+
+        expect(await testWrap(1, 2)).toBe(3);
+        expect(await testWrap('1', '2')).toBe('12');
+        expect(await testWrap('1', '2')).toBe('12');
+        expect(await testWrap.call(testObj, '1', '2')).toBe('Hello World!');
+
+    });
+
 });

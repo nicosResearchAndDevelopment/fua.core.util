@@ -12,7 +12,7 @@ exports.promify = function (fn, ...args) {
             err ? reject(err)
                 : results.length > 1 ? resolve(results)
                     : resolve(results[0]));
-        fn.apply(this === global ? null : this, args);
+        fn.apply(this, args);
     });
 };
 
