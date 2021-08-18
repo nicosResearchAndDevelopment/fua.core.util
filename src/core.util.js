@@ -16,11 +16,15 @@ Object.assign(exports, prop);
 const convert = require('./core.util.convert.js');
 Object.assign(exports, convert);
 
+const helper = require('./core.util.helper.js');
+Object.assign(exports, helper);
+
 module.exports = Object.freeze({
     ...constants,
     ...is,
     ...valid,
     ...assert,
     ...prop,
-    ...convert
+    ...convert,
+    ...helper
 });
