@@ -71,3 +71,18 @@ exports.hideProp = function (obj, ...keys) {
     }
     return _;
 };
+
+/**
+ * @param {Object} obj
+ * @param {number} [depth=0]
+ */
+exports.freezeAllProp = function (obj, depth = 0) {
+    if (!Object.isFrozen(obj)) {
+        Object.freeze(obj);
+        if (depth > 0) for (let value of Object.values(obj)) {
+            if (value instanceof Object)
+                _.freezeAllProp(value, depth - 1);
+        }
+    }
+    return _;
+};
