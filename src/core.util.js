@@ -19,6 +19,9 @@ Object.assign(exports, convert);
 const helper = require('./core.util.helper.js');
 Object.assign(exports, helper);
 
+const timestamp = require('./core.util.timestamp.js');
+Object.assign(exports, timestamp);
+
 module.exports = Object.freeze({
     ...constants,
     ...is,
@@ -26,5 +29,6 @@ module.exports = Object.freeze({
     ...assert,
     ...prop,
     ...convert,
-    ...helper
+    ...helper,
+    ...timestamp
 });
