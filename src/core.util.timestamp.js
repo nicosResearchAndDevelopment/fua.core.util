@@ -2,7 +2,7 @@
  * @param {string} type
  * @returns {timestamp}
  */
-exports.timestamp = function (type = "xsd:dateTimeStamp") {
+function timestamp(type = "xsd:dateTimeStamp") {
     const date = (new Date);
     type       = type.toLowerCase();
     switch (type) {
@@ -11,7 +11,7 @@ exports.timestamp = function (type = "xsd:dateTimeStamp") {
         case "seconds":
             return (date.valueOf() / 1000);
             break; // seconds
-        case "sms":
+        case "ms":
         case "milliseconds":
             return date.valueOf();
             break; // seconds
@@ -21,5 +21,30 @@ exports.timestamp = function (type = "xsd:dateTimeStamp") {
             return date.toISOString();
             break; // default
     } // switch(type)
-};
+}
+
+Object.defineProperties(timestamp, {
+    'xsd:dateTimeStamp': {
+        get:           () => {
+            return timestamp("xsd:dateTimeStamp");
+        }, enumerable: false
+    },
+    'dateTimeStamp':     {
+        get:           () => {
+            return timestamp("xsd:dateTimeStamp");
+        }, enumerable: false
+    },
+    'seconds':           {
+        get:           () => {
+            return timestamp("seconds");
+        }, enumerable: false
+    },
+    'milliseconds':      {
+        get:           () => {
+            return timestamp("milliseconds");
+        }, enumerable: false
+    }
+});
+Object.freeze(timestamp);
+exports.timestamp = timestamp;
 
