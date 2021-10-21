@@ -41,6 +41,7 @@ function _stringifyDate(date) {
         year  = date.getFullYear().toString(),
         month = (date.getMonth() + 1).toString().padStart(2, '0'),
         day   = date.getDate().toString().padStart(2, '0');
+
     return year + '-' + month + '-' + day;
 } // _stringifyDate
 
@@ -52,6 +53,14 @@ function _stringifyDateUTC(date) {
 
     return year + '-' + month + '-' + day;
 } // _stringifyDateUTC
+
+/**
+ * @returns {number}
+ * @see https://en.wikipedia.org/wiki/Unix_time Unix time
+ */
+exports.unixTime = function () {
+    return 1e-3 * Date.now();
+};
 
 /**
  * @param {number | string | Date} [value]
@@ -69,51 +78,12 @@ exports.time = function (value) {
 };
 
 /**
- * @returns {number}
- * @see https://en.wikipedia.org/wiki/Unix_time Unix Epoch time
- */
-exports.time.now = function () {
-    return 1e-3 * Date.now();
-};
-
-/**
- * @param {number | string | Date} [value]
- * @returns {string}
- * @see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6 RFC 3339 - Internet Date/Time Format
- * @see https://www.w3.org/TR/xmlschema11-2/#date XML Schema - xsd:date
- */
-exports.time.date = function (value) {
-    const
-        date    = _parseDate(value),
-        dateStr = _stringifyDate(date),
-        zoneStr = _stringifyZoneOffset(date);
-
-    return dateStr + zoneStr;
-};
-
-/**
- * @param {number | string | Date} [value]
- * @returns {string}
- * @see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6 RFC 3339 - Internet Date/Time Format
- * @see https://www.w3.org/TR/xmlschema11-2/#dateTime XML Schema - xsd:dateTime
- */
-exports.time.datetime = function (value) {
-    const
-        date    = _parseDate(value),
-        dateStr = _stringifyDate(date),
-        timeStr = _stringifyTime(date),
-        zoneStr = _stringifyZoneOffset(date);
-
-    return dateStr + 'T' + timeStr + zoneStr;
-};
-
-/**
  * @param {number | string | Date} [value]
  * @returns {string}
  * @see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6 RFC 3339 - Internet Date/Time Format
  * @see https://www.w3.org/TR/xmlschema11-2/#time XML Schema - xsd:time
  */
-exports.time.utc = function (value) {
+exports.utcTime = function (value) {
     const
         date    = _parseDate(value),
         timeStr = _stringifyTimeUTC(date);
@@ -127,7 +97,22 @@ exports.time.utc = function (value) {
  * @see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6 RFC 3339 - Internet Date/Time Format
  * @see https://www.w3.org/TR/xmlschema11-2/#date XML Schema - xsd:date
  */
-exports.time.utc.date = function (value) {
+exports.date = function (value) {
+    const
+        date    = _parseDate(value),
+        dateStr = _stringifyDate(date),
+        zoneStr = _stringifyZoneOffset(date);
+
+    return dateStr + zoneStr;
+};
+
+/**
+ * @param {number | string | Date} [value]
+ * @returns {string}
+ * @see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6 RFC 3339 - Internet Date/Time Format
+ * @see https://www.w3.org/TR/xmlschema11-2/#date XML Schema - xsd:date
+ */
+exports.utcDate = function (value) {
     const
         date    = _parseDate(value),
         dateStr = _stringifyDateUTC(date);
@@ -141,7 +126,23 @@ exports.time.utc.date = function (value) {
  * @see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6 RFC 3339 - Internet Date/Time Format
  * @see https://www.w3.org/TR/xmlschema11-2/#dateTime XML Schema - xsd:dateTime
  */
-exports.time.utc.datetime = function (value) {
+exports.dateTime = function (value) {
+    const
+        date    = _parseDate(value),
+        dateStr = _stringifyDate(date),
+        timeStr = _stringifyTime(date),
+        zoneStr = _stringifyZoneOffset(date);
+
+    return dateStr + 'T' + timeStr + zoneStr;
+};
+
+/**
+ * @param {number | string | Date} [value]
+ * @returns {string}
+ * @see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6 RFC 3339 - Internet Date/Time Format
+ * @see https://www.w3.org/TR/xmlschema11-2/#dateTime XML Schema - xsd:dateTime
+ */
+exports.utcDateTime = function (value) {
     const
         date    = _parseDate(value),
         dateStr = _stringifyDateUTC(date),
@@ -150,12 +151,11 @@ exports.time.utc.datetime = function (value) {
     return dateStr + 'T' + timeStr + 'Z';
 };
 
-// console.log(exports.time());
-// console.log(exports.time.date());
-// console.log(exports.time.datetime());
-// console.log(exports.time.utc());
-// console.log(exports.time.utc.date());
-// console.log(exports.time.utc.datetime());
-// console.log(new Date().toISOString());
-
-// TODO make all methods flat, because that is the pragma of this utility
+console.log(exports.unixTime());
+console.log(exports.time());
+console.log(exports.date());
+console.log(exports.dateTime());
+console.log(exports.utcTime());
+console.log(exports.utcDate());
+console.log(exports.utcDateTime());
+console.log(new Date().toISOString());
