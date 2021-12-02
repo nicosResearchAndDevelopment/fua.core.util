@@ -18,9 +18,13 @@ class DoublyLinkedList {
         this.length = 0;
         this._first = null;
         this._last  = null;
+        // IDEA
+        // this._current      = null;
+        // this._currentIndex = null;
         Object.defineProperties(this, {
             _first: {enumerable: false},
             _last:  {enumerable: false}
+            // _current: {enumerable: false}
         });
     } // DoublyLinkedList#constructor
 
