@@ -6,8 +6,7 @@ const
  * @returns {boolean}
  */
 exports.isDefined = function (value) {
-    return value !== void 0; // REM got changed: look out for bugs
-    //return (value ?? null) !== null;
+    return value !== void 0;
 };
 
 /**
@@ -15,8 +14,15 @@ exports.isDefined = function (value) {
  * @returns {boolean}
  */
 exports.isNull = function (value) {
-    //return value !== void 0; // REM got changed: look out for bugs
     return (value ?? null) === null;
+};
+
+/**
+ * @param {undefined|null|any} value
+ * @returns {boolean}
+ */
+exports.isNotNull = function (value) {
+    return !_.isNull(value);
 };
 
 /**
