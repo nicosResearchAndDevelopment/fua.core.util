@@ -1,20 +1,31 @@
 const
-    _    = require('./core.util.js'),
-    _tty = require('./core.util.logger.tty.js');
+    _         = require('./core.util.js'),
+    _color    = require('./core.util.logger.colors.js'),
+    {inspect} = require('util');
 
 function _log(txt) {
-    const log = _tty.grey('[' + _.dateTime() + ']') + ' ' + txt;
+    const log = _color.grey('[' + _.dateTime() + ']') + ' ' + txt;
     process.stdout.write(log + '\n'); // console.log(log);
 }
 
 exports.logText = function (txt) {
-    _log(_tty.white(txt));
+    _log(_color.white(txt));
 };
 
 exports.logWarning = function (msg) {
-    _log(_tty.lightYellow(msg));
+    _log(_color.yellowBright(msg));
 };
 
 exports.logError = function (err) {
-    _log(_tty.lightRed(err?.stack ?? err));
+    _log(_color.redBright(err?.stack ?? err));
+};
+
+exports.logObject = function (obj) {
+    // TODO implement own function
+    _log(inspect(obj, {
+        depth:   10,
+        colors:  true,
+        sorted:  true,
+        getters: true
+    }));
 };
