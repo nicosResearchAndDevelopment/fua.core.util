@@ -150,12 +150,3 @@ exports.utcDateTime = function (value) {
 
     return dateStr + 'T' + timeStr + 'Z';
 };
-
-console.log(exports.unixTime());
-console.log(exports.time());
-console.log(exports.date());
-console.log(exports.dateTime());
-console.log(exports.utcTime());
-console.log(exports.utcDate());
-console.log(exports.utcDateTime());
-console.log(new Date().toISOString());

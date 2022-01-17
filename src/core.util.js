@@ -22,6 +22,12 @@ Object.assign(exports, helper);
 const timestamp = require('./core.util.timestamp.js');
 Object.assign(exports, timestamp);
 
+const time = require('./core.util.time.js');
+Object.assign(exports, time);
+
+const logger = require('./core.util.logger.js');
+Object.assign(exports, logger);
+
 module.exports = Object.freeze({
     ...constants,
     ...is,
@@ -30,5 +36,12 @@ module.exports = Object.freeze({
     ...prop,
     ...convert,
     ...helper,
-    ...timestamp
+    ...timestamp,
+    ...time,
+    ...logger
 });
+
+exports.logText('Hello World!');
+exports.logError(new TypeError('this is a test'));
+exports.logWarning('Hello World!');
+console.log({test: 'Test'});
