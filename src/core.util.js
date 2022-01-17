@@ -40,8 +40,3 @@ module.exports = Object.freeze({
     ...time,
     ...logger
 });
-
-exports.logText('Hello World!');
-exports.logError(new TypeError('this is a test'));
-exports.logWarning('Hello World!');
-console.log({test: 'Test'});
