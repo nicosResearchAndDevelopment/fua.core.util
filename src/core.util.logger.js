@@ -16,6 +16,10 @@ exports.logWarning = function (msg) {
     _log(_color.yellowBright(msg));
 };
 
+exports.logDone = function () {
+    _log(_color.green('done'));
+};
+
 exports.logError = function (err) {
     _log(_color.redBright(err?.stack ?? err));
 };
