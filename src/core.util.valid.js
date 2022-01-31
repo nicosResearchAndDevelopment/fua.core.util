@@ -1,6 +1,25 @@
 const
     _ = require('./core.util.js');
 
+/**
+ * @typedef {object} ValidationRule
+ * @property {string|Array<string>} [type]
+ * @property {Function|Array<Function>} [class]
+ * @property {Array<any>} [enum]
+ * @property {RegExp} [pattern]
+ * @property {ValidationRule} [items]
+ * @property {{[key: string]: ValidationRule}} [properties]
+ * @property {ValidationRule} [not]
+ * @property {Array<ValidationRule>} [and]
+ * @property {Array<ValidationRule>} [or]
+ * @property {Array<ValidationRule>} [xor]
+ */
+
+/**
+ * @param {any} value
+ * @param {ValidationRule} rule
+ * @returns {boolean}
+ */
 exports.validate = function (value, rule) {
     return rule
         && (!rule.type || (
@@ -31,8 +50,17 @@ exports.validate = function (value, rule) {
         ))
         && (!rule.not || (
             !_.validate(value, rule.not)
+        ))
+        && (!rule.and || (
+            rule.and.every(andRule => _.validate(value, andRule))
+        ))
+        && (!rule.or || (
+            rule.or.some(orRule => _.validate(value, orRule))
+        ))
+        && (!rule.xor || (
+            rule.xor.filter(xorRule => _.validate(value, xorRule)).length === 1
         ));
-};
+}; // validate = function (value, rule)
 
 /**
  * @param {RegExp} pattern

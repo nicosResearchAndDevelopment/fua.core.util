@@ -114,4 +114,37 @@ describe('core.util', function () {
 
     });
 
+    test('validate', function () {
+        expect(_.validate(String('test'), {
+            type: 'string'
+        })).toBeTruthy();
+        expect(_.validate(new String('test'), {
+            type: 'string'
+        })).toBeFalsy();
+        expect(_.validate(String('test'), {
+            or: [
+                {type: 'string'},
+                {class: String}
+            ]
+        })).toBeTruthy();
+        expect(_.validate(new String('test'), {
+            or: [
+                {type: 'string'},
+                {class: String}
+            ]
+        })).toBeTruthy();
+        expect(_.validate([], {
+            xor: [
+                {class: Array},
+                {type: 'object'}
+            ]
+        })).toBeFalsy();
+        expect(_.validate([], {
+            and: [
+                {class: Array},
+                {type: 'object'}
+            ]
+        })).toBeTruthy();
+    });
+
 });
