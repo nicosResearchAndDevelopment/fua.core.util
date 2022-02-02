@@ -9,7 +9,7 @@ function _log(txt) {
 }
 
 exports.logText = function (txt) {
-    _log(_color.white(txt));
+    _log(txt);
 };
 
 exports.logWarning = function (msg) {
