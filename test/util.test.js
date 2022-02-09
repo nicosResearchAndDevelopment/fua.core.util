@@ -153,4 +153,10 @@ describe('core.util', function () {
         console.log(_.extractType(new Map([['test', 123], ['hello', [1, 2, 3, 4]]])));
     });
 
+    test('createErrorClass', function () {
+        const ErrClass = _.createErrorClass('TestError');
+        console.log(new ErrClass('test'));
+        console.log(new ErrClass('test').toString());
+    });
+
 });
