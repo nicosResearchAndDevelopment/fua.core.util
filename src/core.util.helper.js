@@ -87,14 +87,15 @@ exports.extractType = function (value) {
  * @returns {Function}
  */
 exports.createErrorClass = function (errName = 'Error', errCode = '') {
+
     return class extends Error {
 
         #name = errName;
         #code = errCode;
 
-        constructor(message, code) {
+        constructor(message = '', code) {
             super(message);
-            if (code && !errCode) this.#code = code;
+            if (!errCode && code) this.#code = code;
         }
 
         get name() {

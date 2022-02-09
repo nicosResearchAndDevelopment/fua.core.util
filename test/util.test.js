@@ -157,6 +157,7 @@ describe('core.util', function () {
         const ErrClass = _.createErrorClass('TestError');
         console.log(new ErrClass('test'));
         console.log(new ErrClass('test').toString());
+        // console.log(ErrClass('test'));
     });
 
 });
