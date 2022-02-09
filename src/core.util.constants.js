@@ -12,3 +12,4 @@ exports.$$iterator      = Symbol.iterator;
 exports.$$asyncIterator = Symbol.asyncIterator;
 exports.$$species       = Symbol.species;
 exports.$$hasInstance   = Symbol.hasInstance;
+exports.$$toStringTag   = Symbol.toStringTag;

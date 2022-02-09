@@ -147,4 +147,10 @@ describe('core.util', function () {
         })).toBeTruthy();
     });
 
+    test('extractType', function () {
+        console.log(_.extractType({test: ['hello', 123], lorem: 'ipsum', bool: true}));
+        console.log(_.extractType(new Set([123, 'hello', Symbol.hasInstance, 2n])));
+        console.log(_.extractType(new Map([['test', 123], ['hello', [1, 2, 3, 4]]])));
+    });
+
 });
