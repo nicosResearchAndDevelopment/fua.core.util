@@ -154,10 +154,15 @@ describe('core.util', function () {
     });
 
     test('createErrorClass', function () {
-        const ErrClass = _.createErrorClass('TestError');
-        console.log(new ErrClass('test'));
-        console.log(new ErrClass('test').toString());
-        // console.log(ErrClass('test'));
+        const ErrClass = _.createErrorClass('TestError', 'ERROR_TEST');
+        const err      = new ErrClass('test message')
+        console.log(err);
+        console.log(err instanceof Error);
+        console.log(err.message);
+        console.log(err.code);
+        console.log(err.stack);
+        console.log(err.toString());
+        console.log(ErrClass('test message'));
     });
 
 });

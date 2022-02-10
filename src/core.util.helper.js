@@ -84,30 +84,30 @@ exports.extractType = function (value) {
 /**
  * @param {string} [errName="Error"]
  * @param {string} [errCode='']
+ * @param {Function} [errInit]
  * @returns {Function}
  */
-exports.createErrorClass = function (errName = 'Error', errCode = '') {
+exports.createErrorClass = function (errName = 'Error', errCode = '', errInit) {
+    const CustomError = function (message = '', ...args) {
+        if (!new .target) return new CustomError(message, ...args);
+        Error.captureStackTrace(this, CustomError);
+        Object.defineProperties(this, {
+            message: {value: message}
+        });
+        if (errInit) errInit.apply(this, args);
+    }; // CustomError
 
-    return class extends Error {
+    CustomError.prototype = Object.create(Error.prototype);
 
-        #name = errName;
-        #code = errCode;
+    Object.defineProperties(CustomError.prototype, {
+        constructor: {value: CustomError},
+        name:        {value: errName},
+        code:        {value: errCode}
+    });
 
-        constructor(message = '', code) {
-            super(message);
-            if (!errCode && code) this.#code = code;
-        }
+    Object.defineProperties(CustomError, {
+        name: {value: errName}
+    });
 
-        get name() {
-            return this.#name;
-        }
-
-        get code() {
-            return this.#code;
-        }
-
-        static get name() {
-            return errName;
-        }
-    };
+    return CustomError;
 };

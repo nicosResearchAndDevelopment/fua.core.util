@@ -126,7 +126,10 @@ exports.isObjectArray = function (value) {
  * @param {Array|any} value
  * @returns {boolean}
  */
-exports.isArray = Array.isArray;
+exports.isArray = function (value) {
+    // return value instanceof Array;
+    return Array.isArray(value);
+};
 
 /**
  * @param {Iterable|any} value
@@ -158,7 +161,8 @@ exports.isError = function (value) {
  * @returns {boolean}
  */
 exports.isBuffer = function (value) {
-    return value instanceof Buffer;
+    // return value instanceof Buffer;
+    return Buffer.isBuffer(value);
 };
 
 /**
