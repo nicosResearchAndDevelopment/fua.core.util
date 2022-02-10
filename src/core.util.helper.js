@@ -89,7 +89,11 @@ exports.extractType = function (value) {
  */
 exports.createErrorClass = function (errName = 'Error', errCode = '', errInit) {
     const CustomError = function (message = '', ...args) {
-        if (!new .target) return new CustomError(message, ...args);
+        if (!new .target) {
+            const that = new CustomError(message, ...args);
+            Error.captureStackTrace(that, CustomError);
+            return that;
+        }
         Error.captureStackTrace(this, CustomError);
         Object.defineProperties(this, {
             message: {value: message}
