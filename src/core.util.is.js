@@ -69,9 +69,16 @@ exports.isNumberArray = function (value) {
  * @param {number|any} value
  * @returns {boolean}
  */
+exports.isFiniteNumber = function (value) {
+    return _.isNumber(value) && Number.isFinite(value);
+};
+
+/**
+ * @param {number|any} value
+ * @returns {boolean}
+ */
 exports.isInteger = function (value) {
-    //return _.isNumber(value) && value === parseInt(value);
-    return Number.isInteger(value);
+    return _.isNumber(value) && Number.isInteger(value);
 };
 
 /**
