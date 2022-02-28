@@ -156,6 +156,14 @@ exports.isDate = function (value) {
 };
 
 /**
+ * @param {RegExp|any} value
+ * @returns {boolean}
+ */
+exports.isRegExp = function (value) {
+    return value instanceof RegExp;
+};
+
+/**
  * @param {Error|any} value
  * @returns {boolean}
  */
