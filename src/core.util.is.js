@@ -30,7 +30,7 @@ exports.isNotNull = function (value) {
  * @returns {boolean}
  */
 exports.isPrimitive = function (value) {
-    return _.isBoolean(value) || _.isNumber(value) || _.isString(value);
+    return _.isBoolean(value) || _.isAnyNumber(value) || _.isString(value);
 };
 
 /**
