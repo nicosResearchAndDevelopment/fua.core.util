@@ -98,6 +98,14 @@ exports.isInteger = function (value) {
 };
 
 /**
+ * @param {BigInt|any} value
+ * @returns {boolean}
+ */
+exports.isBigInt = function (value) {
+    return typeof value === 'bigint';
+};
+
+/**
  * @param {string|any} value
  * @returns {boolean}
  */
