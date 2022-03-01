@@ -26,6 +26,14 @@ exports.isNotNull = function (value) {
 };
 
 /**
+ * @param {boolean|number|string|any} value
+ * @returns {boolean}
+ */
+exports.isPrimitive = function (value) {
+    return _.isBoolean(value) || _.isNumber(value) || _.isString(value);
+};
+
+/**
  * @param {true|any} value
  * @returns {boolean}
  */
@@ -55,6 +63,14 @@ exports.isBoolean = function (value) {
  */
 exports.isNumber = function (value) {
     return typeof value === 'number' && !isNaN(value);
+};
+
+/**
+ * @param {number|any} value
+ * @returns {boolean}
+ */
+exports.isAnyNumber = function (value) {
+    return typeof value === 'number';
 };
 
 /**
@@ -153,6 +169,14 @@ exports.isIterable = function (value) {
 exports.isDate = function (value) {
     return value && value instanceof Date
         && !isNaN(value.valueOf());
+};
+
+/**
+ * @param {Date|any} value
+ * @returns {boolean}
+ */
+exports.isAnyDate = function (value) {
+    return value instanceof Date;
 };
 
 /**
