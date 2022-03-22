@@ -8,7 +8,7 @@ const
 exports.lockProp = function (obj, ...keys) {
     const lock = {writable: false, configurable: false};
     for (let key of keys) {
-        const writable = !obj.hasOwnProperty(key) || Reflect.getOwnPropertyDescriptor(obj, key).configurable;
+        const writable = !Object.prototype.hasOwnProperty.call(obj, key) || Reflect.getOwnPropertyDescriptor(obj, key).configurable;
         if (writable) Object.defineProperty(obj, key, lock);
     }
     return _;
@@ -21,7 +21,7 @@ exports.lockProp = function (obj, ...keys) {
 exports.lockAllProp = function (obj, depth = 0) {
     const lock = {writable: false, configurable: false};
     for (let [key, value] of Object.entries(obj)) {
-        const writable = !obj.hasOwnProperty(key) || Reflect.getOwnPropertyDescriptor(obj, key).configurable;
+        const writable = !Object.prototype.hasOwnProperty.call(obj, key) || Reflect.getOwnPropertyDescriptor(obj, key).configurable;
         if (writable) {
             Object.defineProperty(obj, key, lock);
             if (depth > 0 && value instanceof Object)
@@ -38,7 +38,7 @@ exports.lockAllProp = function (obj, depth = 0) {
  */
 exports.defaultLockProp = function (obj, ...keys) {
     for (let key of keys) {
-        const writable = !obj.hasOwnProperty(key) || Reflect.getOwnPropertyDescriptor(obj, key).configurable;
+        const writable = !Object.prototype.hasOwnProperty.call(obj, key) || Reflect.getOwnPropertyDescriptor(obj, key).configurable;
         if (writable) {
             let
                 current  = obj[key],
