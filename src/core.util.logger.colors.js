@@ -22,6 +22,7 @@ function _create(open, close) {
         closeRegex = new RegExp(`\\x1b\\[${close}m`, 'g');
 
     return function (txt) {
+        txt = '' + txt;
         if (!(enabled && txt)) return txt;
         if (!txt.includes(closeTag)) return openTag + txt + closeTag;
         return openTag + txt.replace(closeRegex, closeTag + openTag) + closeTag;
