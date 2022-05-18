@@ -58,8 +58,9 @@ function _stringifyDateUTC(date) {
  * @returns {number}
  * @see https://en.wikipedia.org/wiki/Unix_time Unix time
  */
-exports.unixTime = function () {
-    return 1e-3 * Date.now();
+exports.unixTime = function (rounded = false) {
+    const value = 1e-3 * Date.now();
+    return rounded ? Math.round(value) : value;
 };
 
 /**
