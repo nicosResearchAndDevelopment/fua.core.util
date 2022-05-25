@@ -2,8 +2,8 @@ const
     _ = require('./core.util.js');
 
 function _parseDate(value) {
-    if (value) return new Date(value);
     if (_.isNumber(value)) return new Date(1e3 * value);
+    if (value) return new Date(value);
     return new Date();
 } // _parseDate
 
