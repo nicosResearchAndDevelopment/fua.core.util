@@ -84,6 +84,20 @@ exports.time = function (value) {
  * @see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6 RFC 3339 - Internet Date/Time Format
  * @see https://www.w3.org/TR/xmlschema11-2/#time XML Schema - xsd:time
  */
+exports.localTime = function (value) {
+    const
+        date    = _parseDate(value),
+        timeStr = _stringifyTime(date);
+
+    return timeStr;
+};
+
+/**
+ * @param {number | string | Date} [value]
+ * @returns {string}
+ * @see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6 RFC 3339 - Internet Date/Time Format
+ * @see https://www.w3.org/TR/xmlschema11-2/#time XML Schema - xsd:time
+ */
 exports.utcTime = function (value) {
     const
         date    = _parseDate(value),
@@ -105,6 +119,20 @@ exports.date = function (value) {
         zoneStr = _stringifyZoneOffset(date);
 
     return dateStr + zoneStr;
+};
+
+/**
+ * @param {number | string | Date} [value]
+ * @returns {string}
+ * @see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6 RFC 3339 - Internet Date/Time Format
+ * @see https://www.w3.org/TR/xmlschema11-2/#date XML Schema - xsd:date
+ */
+exports.localDate = function (value) {
+    const
+        date    = _parseDate(value),
+        dateStr = _stringifyDate(date);
+
+    return dateStr;
 };
 
 /**
@@ -135,6 +163,21 @@ exports.dateTime = function (value) {
         zoneStr = _stringifyZoneOffset(date);
 
     return dateStr + 'T' + timeStr + zoneStr;
+};
+
+/**
+ * @param {number | string | Date} [value]
+ * @returns {string}
+ * @see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6 RFC 3339 - Internet Date/Time Format
+ * @see https://www.w3.org/TR/xmlschema11-2/#dateTime XML Schema - xsd:dateTime
+ */
+exports.localDateTime = function (value) {
+    const
+        date    = _parseDate(value),
+        dateStr = _stringifyDate(date),
+        timeStr = _stringifyTime(date);
+
+    return dateStr + 'T' + timeStr;
 };
 
 /**
