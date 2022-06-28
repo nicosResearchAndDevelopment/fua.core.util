@@ -12,12 +12,16 @@ exports.logText = function (txt) {
     _log(txt);
 };
 
-exports.logWarning = function (msg) {
+exports.logWarning = function (msg = 'warning') {
     _log(_color.yellowBright(msg));
 };
 
-exports.logDone = function () {
-    _log(_color.green('done'));
+exports.logDone = function (msg = 'done') {
+    _log(_color.green(msg));
+};
+
+exports.logSuccess = function (msg = 'success') {
+    _log(_color.green(msg));
 };
 
 exports.logError = function (err) {
