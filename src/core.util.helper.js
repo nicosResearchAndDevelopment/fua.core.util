@@ -78,7 +78,7 @@ exports.extractType = function (value) {
         return '{' + Array.from(entryTypes.entries()).map(([key, entry]) => key + ':' + entry).sort().join(',') + '}';
     }
 
-    return value[_.$$toStringTag] || value.__proto__.constructor.name || 'Object';
+    return value[Symbol.toStringTag] || value.__proto__.constructor.name || 'Object';
 };
 
 /**
