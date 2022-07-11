@@ -41,8 +41,10 @@ exports.logObject = function (obj) {
 };
 
 exports.logTodo = function (msg = '') {
-    const temp = {name: _color.yellow(_color.bold('TODO')), message: msg};
+    const temp = {
+        name:    _color.yellow(_color.bold('TODO')),
+        message: msg.trim().replace(/\s+/g, ' ')
+    };
     Error.captureStackTrace(temp, exports.logTodo);
-    const trace = temp.stack.match(/^.*\r?\n.*/);
-    _log(trace);
+    _log(temp.stack.match(/^.*\r?\n.*/));
 };
