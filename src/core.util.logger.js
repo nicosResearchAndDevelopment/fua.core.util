@@ -4,8 +4,10 @@ const
     {inspect} = require('util');
 
 function _log(txt) {
-    const log = _color.grey('[' + _.dateTime() + ']') + ' ' + txt;
-    process.stdout.write(log + '\n'); // console.log(log);
+    const
+        ts  = _.NODE_PROD ? _.dateTime() : _.localTime(),
+        log = _color.grey('[' + ts + ']') + ' ' + txt;
+    process.stdout.write(log + '\n');
 }
 
 exports.logText = function (txt) {
@@ -36,4 +38,11 @@ exports.logObject = function (obj) {
         sorted:  true,
         getters: true
     }));
+};
+
+exports.logTodo = function (msg = '') {
+    const temp = {name: _color.yellow(_color.bold('TODO')), message: msg};
+    Error.captureStackTrace(temp, exports.logTodo);
+    const trace = temp.stack.match(/^.*\r?\n.*/);
+    _log(trace);
 };
