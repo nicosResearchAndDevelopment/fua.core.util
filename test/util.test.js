@@ -165,4 +165,11 @@ describe('core.util', function () {
         console.log(ErrClass('test message'));
     });
 
+    test('logTodo', function () {
+        this.timeout(0);
+        _.logTodo('Hello World!');
+        console.log(new Error('test'));
+        _.logTodo('Lorem Ipsum');
+    });
+
 });
