@@ -55,3 +55,21 @@ exports.logTodo = function (msg = '') {
 
     _log(tempErrorTarget.stack);
 }; // logTodo
+
+exports.logRequest = function (request) {
+    // TODO improve
+    let str = `${request.method} ${request.url} HTTP/1.1`;
+    for (let [key, value] of Object.entries(request.headers)) {
+        str += `\n  ${key}: ${value}`;
+    }
+    _log(str);
+}; // logRequest
+
+exports.logResponse = function (response) {
+    // TODO improve
+    let str = `HTTP/1.1 ${response.statusCode} ${response.statusMessage}`;
+    for (let [key, value] of Object.entries(response.headers)) {
+        str += `\n  ${key}: ${value}`;
+    }
+    _log(str);
+}; // logResponse
