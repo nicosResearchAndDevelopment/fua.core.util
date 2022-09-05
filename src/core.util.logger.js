@@ -57,19 +57,17 @@ exports.logTodo = function (msg = '') {
 }; // logTodo
 
 exports.logRequest = function (request) {
-    // TODO improve
-    let str = `${request.method} ${request.url} HTTP/1.1`;
+    let str = _color.bold(request.method) + ' ' + _color.cyan(request.url) + ' HTTP/' + request.httpVersion;
     for (let [key, value] of Object.entries(request.headers)) {
-        str += `\n  ${key}: ${value}`;
+        str += '\n  ' + _color.magenta(key) + ': ' + _color.green(value);
     }
     _log(str);
 }; // logRequest
 
 exports.logResponse = function (response) {
-    // TODO improve
-    let str = `HTTP/1.1 ${response.statusCode} ${response.statusMessage}`;
+    let str = 'HTTP/' + response.httpVersion + ' ' + _color.bold(response.statusCode) + ' ' + _color.italic(response.statusMessage);
     for (let [key, value] of Object.entries(response.headers)) {
-        str += `\n  ${key}: ${value}`;
+        str += '\n  ' + _color.magenta(key) + ': ' + _color.green(value);
     }
     _log(str);
 }; // logResponse
