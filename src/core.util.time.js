@@ -55,6 +55,7 @@ function _stringifyDateUTC(date) {
 } // _stringifyDateUTC
 
 /**
+ * @param {boolean} [rounded=false]
  * @returns {number}
  * @see https://en.wikipedia.org/wiki/Unix_time Unix time
  */
@@ -193,4 +194,56 @@ exports.utcDateTime = function (value) {
         timeStr = _stringifyTimeUTC(date);
 
     return dateStr + 'T' + timeStr + 'Z';
+};
+
+const _durationPattern = /^(-?)P?(?:(\d+)Y)?(?:(\d+)M)?(?:(\d+)[Dd])?T?(?:(\d+)[Hh])?(?:(\d+)[Mm])?(?:(\d+|\d*\.\d+)[Ss])?(?:(\d+?)ms)?$/;
+
+/**
+ * @param {number | string | Date} [value]
+ * @param {number | string | Date} [reference]
+ * @returns {number}
+ */
+exports.duration = function (value, reference) {
+    if (_.isNumber(value)) return value;
+    if (_.isString(value)) {
+        const [match, sign, YYYY, MM, DD, hh, mm, ss_ms, ms] = _durationPattern.exec(value) || [];
+        if (!match) throw new Error('expected duration pattern');
+        const
+            date         = _parseDate(reference),
+            years        = parseInt(YYYY || 0),
+            months       = parseInt(MM || 0),
+            days         = parseInt(DD || 0),
+            hours        = parseInt(hh || 0),
+            minutes      = parseInt(mm || 0),
+            seconds      = parseInt(ss_ms || 0),
+            milliseconds = 1000 * (parseFloat(ss_ms || 0) - seconds) + parseInt(ms || 0),
+            factor       = sign === '-' ? -1 : 1,
+            target       = new Date(
+                date.getFullYear() + factor * years,
+                date.getMonth() + factor * months,
+                date.getDate() + factor * days,
+                date.getHours() + factor * hours,
+                date.getMinutes() + factor * minutes,
+                date.getSeconds() + factor * seconds,
+                date.getMilliseconds() + factor * milliseconds
+            );
+        return (target.getTime() - date.getTime()) / 1e3;
+    }
+    if (_.isDate(value)) {
+        const date = _parseDate(reference);
+        return (value.getTime() - date.getTime()) / 1e3;
+    }
+    return 0;
+};
+
+/**
+ * @param {number | string} value
+ * @returns {Promise<void>}
+ */
+exports.pause = function (value) {
+    const seconds = _.duration(value);
+    return new Promise((resolve) => {
+        if (seconds >= 0) setTimeout(resolve, 1e3 * seconds);
+        else setImmediate(resolve);
+    });
 };

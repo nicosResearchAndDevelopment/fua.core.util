@@ -28,17 +28,6 @@ exports.promisify = function (fn) {
 };
 
 /**
- * @param {number} seconds
- * @returns {Promise<void>}
- */
-exports.pause = function (seconds) {
-    return new Promise((resolve) => {
-        if (seconds >= 0) setTimeout(resolve, 1e3 * seconds);
-        else setImmediate(resolve);
-    });
-};
-
-/**
  * Returns a string representing the type of the given value.
  * @param {any} value
  * @returns {string}
