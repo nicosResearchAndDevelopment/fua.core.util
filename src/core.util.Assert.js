@@ -111,3 +111,9 @@ exports.assertNotEquals = function (value, other, errMsg = 'expected not to be e
         throw err;
     }
 };
+
+exports.assertTodo = function (errMsg = 'not implemented') {
+    const err = new Error(errMsg);
+    Error.captureStackTrace(err, exports.assertTodo);
+    throw err;
+};
