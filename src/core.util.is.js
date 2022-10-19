@@ -10,6 +10,14 @@ exports.isDefined = function (value) {
 };
 
 /**
+ * @param {any} value
+ * @returns {boolean}
+ */
+exports.isUndefined = function (value) {
+    return value === void 0;
+};
+
+/**
  * @param {undefined|null|any} value
  * @returns {boolean}
  */
