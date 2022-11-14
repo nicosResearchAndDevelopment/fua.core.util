@@ -71,3 +71,64 @@ exports.logResponse = function (response) {
     }
     _log(str);
 }; // logResponse
+
+let tableCount = 0;
+
+exports.logTable = function (rows, columns, tableName) {
+    const
+        collapseWhitespace = (text) => text.replace(/\s+/g, ' ').trim(),
+        colKeys            = columns ? Object.keys(columns) : [],
+        colTitles          = columns ? Object.values(columns).map(collapseWhitespace) : [],
+        colSizes           = columns ? colTitles.map(title => Math.max(3, title.length)) : [],
+        padValues          = (value, index) => value.padEnd(colSizes[index], ' '),
+        rowEntries         = [],
+        resultEntries      = [];
+
+    if (!columns) {
+        const keySet = new Set();
+        for (let row of Object.values(rows)) {
+            for (let key of Object.keys(row)) {
+                keySet.add(key);
+            }
+        }
+        colKeys.push('_');
+        colTitles.push(Array.isArray(rows) ? '(index)' : '(key)');
+        colSizes.push(colTitles[0].length);
+        for (let key of keySet) {
+            colKeys.push(key);
+            const title = collapseWhitespace(key);
+            colTitles.push(title);
+            colSizes.push(Math.max(3, title.length));
+        }
+    }
+
+    for (let [rowIndex, row] of Object.entries(rows)) {
+        const entry = new Array(colKeys.length);
+        rowEntries.push(entry);
+        for (let colIndex = 0; colIndex < colKeys.length; colIndex++) {
+            const colKey = colKeys[colIndex];
+            let colValue = '';
+            if (colKey === '_') colValue += rowIndex;
+            else colValue += row[colKey] ?? '';
+            colValue = collapseWhitespace(colValue);
+            if (colValue.length > colSizes[colIndex]) colSizes[colIndex] = colValue.length;
+            entry[colIndex] = colValue;
+        }
+    }
+
+    if (!tableName) {
+        tableCount++;
+        tableName = 'Table ' + tableCount;
+    }
+
+    resultEntries.push(_color.yellow(tableName) + ' ' + _color.grey(`(${colTitles.length} columns, ${rowEntries.length} rows)`));
+    resultEntries.push(_color.grey('┌─' + colSizes.map(size => ''.padEnd(size, '─')).join('─┬─') + '─┐'));
+    resultEntries.push(_color.grey('| ') + colTitles.map(padValues).map(_color.bold).join(_color.grey(' | ')) + _color.grey(' |'));
+    resultEntries.push(_color.grey('├─' + colSizes.map(size => ''.padEnd(size, '─')).join('─┼─') + '─┤'));
+    for (let entry of rowEntries) {
+        resultEntries.push(_color.grey('| ') + entry.map(padValues).join(_color.grey(' | ')) + _color.grey(' |'));
+    }
+    resultEntries.push(_color.grey('└─' + colSizes.map(size => ''.padEnd(size, '─')).join('─┴─') + '─┘'));
+
+    return _log(resultEntries.join('\n'));
+};
