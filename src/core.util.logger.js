@@ -80,7 +80,8 @@ exports.logTable = function (rows, columns, tableName) {
         colKeys            = columns ? Object.keys(columns) : [],
         colTitles          = columns ? Object.values(columns).map(collapseWhitespace) : [],
         colSizes           = columns ? colTitles.map(title => Math.max(3, title.length)) : [],
-        padValues          = (value, index) => value.padEnd(colSizes[index], ' '),
+        // padValues          = (value, index) => value.padEnd(colSizes[index], ' '),
+        padValues          = (value, index) => value.padStart((colSizes[index] + value.length) / 2, ' ').padEnd(colSizes[index], ' '),
         rowEntries         = [],
         resultEntries      = [];
 
