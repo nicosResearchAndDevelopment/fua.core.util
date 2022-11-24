@@ -52,3 +52,37 @@ exports.toArray = function (value) {
             return [value];
     }
 };
+
+/**
+ * @param {Object} target
+ * @param {...Object} sourceArr
+ * @returns {Object}
+ */
+exports.extendObject = function (target = {}, ...sourceArr) {
+    for (let source of sourceArr) {
+        for (let [key, sVal] of Object.entries(source)) {
+            const tVal  = target[key];
+            target[key] = _.isObject(sVal) && !_.isArray(sVal)
+                ? _.extendObject(_.isObject(tVal) && !_.isArray(tVal) ? tVal : {}, sVal)
+                : sVal;
+        }
+    }
+    return target;
+};
+
+/**
+ * @param {Object} target
+ * @param {...Object} sourceArr
+ * @returns {Object}
+ */
+exports.reduceObject = function (target = {}, ...sourceArr) {
+    for (let source of sourceArr) {
+        for (let [key, sVal] of Object.entries(source)) {
+            const tVal = target[key];
+            if (_.objectEquals(tVal, sVal)) delete target[key];
+            else if (_.isObject(sVal) && !_.isArray(sVal) && _.isObject(tVal) && !_.isArray(tVal))
+                _.reduceObject(tVal, sVal);
+        }
+    }
+    return target;
+};
