@@ -11,8 +11,7 @@
     "expect": "^26.6.2"
   },
   "scripts": {
-    "test": "mocha",
-    "publish": "npm publish"
+    "test": "mocha"
   },
   "mocha": {
     "bail": false,
