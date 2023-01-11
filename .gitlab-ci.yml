@@ -4,6 +4,12 @@
 # This specific template is located at:
 # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/npm.gitlab-ci.yml
 
+# Further information:
+# https://docs.gitlab.com/ee/user/packages/dependency_proxy/
+# https://docs.gitlab.com/ee/ci/docker/using_docker_images.html
+# https://mherman.org/blog/gitlab-ci-private-docker-registry/
+# https://stackoverflow.com/questions/51814625/gitlab-docker-auth-config-not-working
+
 publish:
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:lts
   stage: deploy
