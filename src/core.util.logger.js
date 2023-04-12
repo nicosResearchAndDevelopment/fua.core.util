@@ -58,7 +58,7 @@ exports.logTodo = function (msg = '') {
 
 exports.logRequest = function (request) {
     let str = _color.bold(request.method) + ' ' + _color.cyan(request.url) + ' HTTP/' + request.httpVersion;
-    for (let [key, value] of Object.entries(request.headers)) {
+    if (request.headers) for (let [key, value] of Object.entries(request.headers)) {
         str += '\n  ' + _color.magenta(key) + ': ' + _color.green(value);
     }
     _log(str);
@@ -66,7 +66,7 @@ exports.logRequest = function (request) {
 
 exports.logResponse = function (response) {
     let str = 'HTTP/' + response.httpVersion + ' ' + _color.bold(response.statusCode) + ' ' + _color.italic(response.statusMessage);
-    for (let [key, value] of Object.entries(response.headers)) {
+    if (response.headers) for (let [key, value] of Object.entries(response.headers)) {
         str += '\n  ' + _color.magenta(key) + ': ' + _color.green(value);
     }
     _log(str);
