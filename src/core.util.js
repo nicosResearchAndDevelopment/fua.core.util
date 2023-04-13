@@ -4,6 +4,9 @@ Object.assign(exports, constants);
 const is = require('./core.util.is.js');
 Object.assign(exports, is);
 
+const errors = require('./core.util.errors.js');
+Object.assign(exports, errors);
+
 const valid = require('./core.util.valid.js');
 Object.assign(exports, valid);
 
@@ -28,6 +31,7 @@ Object.assign(exports, logger);
 module.exports = Object.freeze({
     ...constants,
     ...is,
+    ...errors,
     ...valid,
     ...assert,
     ...prop,
