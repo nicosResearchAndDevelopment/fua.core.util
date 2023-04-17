@@ -33,6 +33,7 @@ exports.NUM_MAX_FLOAT   = Number.MAX_VALUE;
 exports.NUM_MIN_INTEGER = Number.MIN_SAFE_INTEGER;
 exports.NUM_MAX_INTEGER = Number.MAX_SAFE_INTEGER;
 
+/** @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status */
 exports.HTTP_STATUS_CODES = Object.freeze({
     100: 'Continue',
     101: 'Switching Protocols',
