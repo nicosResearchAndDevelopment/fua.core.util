@@ -52,7 +52,7 @@ exports.validate = function (value, rule) {
         ))
         && (!rule.properties || (
             _.isObject(value) && Object.entries(rule.properties).every(
-                ([key, subRule]) => !key && Object.entries(value).every(([valueKey, subValue]) => _.validate(subValue, subRule))
+                ([key, subRule]) => !key && Object.values(value).every(subValue => _.validate(subValue, subRule))
                     || _.validate(value[key], subRule)
             )
         ))
