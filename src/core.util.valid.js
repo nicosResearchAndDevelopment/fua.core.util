@@ -52,7 +52,8 @@ exports.validate = function (value, rule) {
         ))
         && (!rule.properties || (
             _.isObject(value) && Object.entries(rule.properties).every(
-                ([key, subRule]) => _.validate(value[key], subRule)
+                ([key, subRule]) => !key && Object.entries(value).every(([valueKey, subValue]) => _.validate(subValue, subRule))
+                    || _.validate(value[key], subRule)
             )
         ))
         && (!('min' in rule) || (
