@@ -6,10 +6,13 @@ const
  * @property {boolean} [optional]
  * @property {string|Array<string>} [type]
  * @property {Function|Array<Function>} [class]
+ * @property {any} [value]
  * @property {Array<any>} [enum]
  * @property {RegExp} [pattern]
  * @property {ValidationRule} [items]
  * @property {{[key: string]: ValidationRule}} [properties]
+ * @property {number} [min]
+ * @property {number} [max]
  * @property {ValidationRule} [not]
  * @property {Array<ValidationRule>} [and]
  * @property {Array<ValidationRule>} [or]
@@ -33,11 +36,14 @@ exports.validate = function (value, rule) {
                 ? rule.class.some(classEntry => value instanceof classEntry)
                 : value instanceof rule.class
         ))
+        && (!('value' in rule) || (
+            Object.is(value, rule.value)
+        ))
         && (!rule.enum || (
             rule.enum.some(entry => value === entry)
         ))
         && (!rule.pattern || (
-            _.isString(value) && rule.pattern.test(value)
+            _.isPrimitive(value) && rule.pattern.test(value)
         ))
         && (!rule.items || (
             _.isArray(value) && value.every(
@@ -48,6 +54,16 @@ exports.validate = function (value, rule) {
             _.isObject(value) && Object.entries(rule.properties).every(
                 ([key, subRule]) => _.validate(value[key], subRule)
             )
+        ))
+        && (!('min' in rule) || (
+            _.isPrimitive(value) && value >= rule.min
+            || _.isNumber(value?.length) && value.length >= rule.min
+            || _.isObject(value) && Object.keys(value).length >= rule.min
+        ))
+        && (!('max' in rule) || (
+            _.isPrimitive(value) && value <= rule.max
+            || _.isNumber(value?.length) && value.length <= rule.max
+            || _.isObject(value) && Object.keys(value).length <= rule.max
         ))
         && (!rule.not || (
             !_.validate(value, rule.not)
