@@ -3,6 +3,7 @@ const
 
 /**
  * @typedef {object} ValidationRule
+ * @property {boolean} [optional]
  * @property {string|Array<string>} [type]
  * @property {Function|Array<Function>} [class]
  * @property {Array<any>} [enum]
@@ -21,8 +22,8 @@ const
  * @returns {boolean}
  */
 exports.validate = function (value, rule) {
-    return rule
-        && (!rule.type || (
+    return rule && (rule.optional && _.isNull(value) || (
+        (!rule.type || (
             _.isArray(rule.type)
                 ? rule.type.some(typeEntry => typeof value === typeEntry)
                 : typeof value === rule.type
@@ -59,7 +60,8 @@ exports.validate = function (value, rule) {
         ))
         && (!rule.xor || (
             rule.xor.filter(xorRule => _.validate(value, xorRule)).length === 1
-        ));
+        ))
+    ));
 }; // validate = function (value, rule)
 
 /**
