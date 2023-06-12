@@ -154,6 +154,15 @@ exports.isObject = function (value) {
 };
 
 /**
+ * @param {Object|any} value
+ * @returns {boolean}
+ */
+exports.isNativeObject = function (value) {
+    return _.isObject(value) && value.__proto__ === Object.prototype;
+    // return _.isObject(value) && (value.__proto__ === Object.prototype || _.isNull(value.__proto__));
+};
+
+/**
  * @param {Array<Object>|any} value
  * @returns {boolean}
  */

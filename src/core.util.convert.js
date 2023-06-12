@@ -62,8 +62,8 @@ exports.extendObject = function (target = {}, ...sourceArr) {
     for (let source of sourceArr) {
         for (let [key, sVal] of Object.entries(source)) {
             const tVal  = target[key];
-            target[key] = _.isObject(sVal) && !_.isArray(sVal)
-                ? _.extendObject(_.isObject(tVal) && !_.isArray(tVal) ? tVal : {}, sVal)
+            target[key] = _.isNativeObject(sVal)
+                ? _.extendObject(_.isNativeObject(tVal) ? tVal : {}, sVal)
                 : sVal;
         }
     }
@@ -80,7 +80,7 @@ exports.reduceObject = function (target = {}, ...sourceArr) {
         for (let [key, sVal] of Object.entries(source)) {
             const tVal = target[key];
             if (_.objectEquals(tVal, sVal)) delete target[key];
-            else if (_.isObject(sVal) && !_.isArray(sVal) && _.isObject(tVal) && !_.isArray(tVal))
+            else if (_.isNativeObject(sVal) && _.isNativeObject(tVal))
                 _.reduceObject(tVal, sVal);
         }
     }
