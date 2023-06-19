@@ -32,4 +32,19 @@ describe('core.util.errors', function () {
 
     });
 
+    describe('toErrorJSON/fromErrorJSON', function () {
+
+        test('develop', function () {
+            const err            = new TypeError('test1', {cause: new Error('test2', {cause: new Error('test3')})});
+            err.code             = 'TEST1';
+            err.cause.code       = 'TEST2';
+            err.cause.cause.name = 'TypeError';
+            err.cause.cause.code = 'TEST3';
+            const errJSON        = _.errorToJSON(err);
+            const err2           = _.errorFromJSON(errJSON);
+            console.log('err', err);
+            console.log('err2', err2);
+        });
+    });
+
 });

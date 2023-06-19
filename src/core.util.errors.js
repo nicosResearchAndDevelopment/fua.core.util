@@ -79,3 +79,69 @@ exports.HTTPResponseError = class HTTPResponseError extends Error {
     }
 
 };
+
+/**
+ * @typedef {{
+ *     name?: string,
+ *     code?: number | string,
+ *     message?: string,
+ *     cause?: ErrorJSON,
+ *     [other: string]: boolean | number | string
+ * }} ErrorJSON
+ */
+
+/**
+ * @param {Error | ErrorJSON | string} err
+ * @returns {ErrorJSON}
+ */
+exports.errorToJSON = function (err) {
+    if (_.isFunction(err?.toJSON)) return err.toJSON();
+    const
+        {name, code, message, cause, ...other} = _.isObject(err) ? err : {message: err},
+        errJSON                                = {
+            name:    _.isString(name) ? name : 'Error',
+            code:    _.isString(code) || _.isNumber(code) ? code : undefined,
+            message: _.isString(message) ? message : 'unknown',
+            cause:   cause ? _.errorToJSON(cause) : undefined
+        };
+    for (let [key, value] of Object.entries(other)) {
+        if (errJSON[key]) continue;
+        if (!_.isPrimitive(value)) continue;
+        errJSON[key] = value;
+    }
+    return errJSON;
+};
+
+exports.errorFromJSON = function (errJSON) {
+    if (errJSON instanceof Error) return errJSON;
+    const
+        customErrors                           = {
+            HTTPRequestError:  () => new _.HTTPRequestError(errJSON),
+            HTTPResponseError: () => new _.HTTPResponseError(errJSON)
+        },
+        {name, code, message, cause, ...other} = _.isObject(errJSON) ? errJSON : {message: errJSON};
+    if (name in customErrors) return customErrors[name]();
+    const
+        nativeErrors = {
+            Error,
+            TypeError
+        },
+        err          = new (nativeErrors[name] || Error)(
+            _.isString(message) ? message : 'unknown',
+            cause ? {cause: _.errorFromJSON(cause)} : undefined
+        );
+    if (_.isString(name)) err.name = name;
+    if (_.isString(code) || _.isNumber(code)) err.code = code;
+    Error.captureStackTrace(err, _.errorFromJSON);
+    let errCause = err.cause;
+    while (errCause) {
+        Error.captureStackTrace(errCause, _.errorFromJSON);
+        errCause = errCause.cause;
+    }
+    for (let [key, value] of Object.entries(other)) {
+        if (err[key]) continue;
+        if (!_.isPrimitive(value)) continue;
+        err[key] = value;
+    }
+    return err;
+};
