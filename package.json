@@ -1,6 +1,6 @@
 {
   "name": "@nrd/fua.core.util",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "src/core.util.js",
   "files": [

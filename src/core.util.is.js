@@ -42,6 +42,14 @@ exports.isPrimitive = function (value) {
 };
 
 /**
+ * @param {Array<boolean|number|string>|any} value
+ * @returns {boolean}
+ */
+exports.isPrimitiveArray = function (value) {
+    return _.isArray(value) && value.every(_.isPrimitive);
+};
+
+/**
  * @param {true|any} value
  * @returns {boolean}
  */
@@ -63,6 +71,14 @@ exports.isFalsy = function (value) {
  */
 exports.isBoolean = function (value) {
     return typeof value === 'boolean';
+};
+
+/**
+ * @param {Array<boolean>|any} value
+ * @returns {boolean}
+ */
+exports.isBooleanArray = function (value) {
+    return _.isArray(value) && value.every(_.isBoolean);
 };
 
 /**
