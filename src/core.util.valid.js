@@ -2,86 +2,6 @@ const
     _ = require('./core.util.js');
 
 /**
- * @typedef {object} ValidationRule
- * @property {boolean} [optional]
- * @property {string|Array<string>} [type]
- * @property {Function|Array<Function>} [class]
- * @property {any} [value]
- * @property {Array<any>} [enum]
- * @property {RegExp} [pattern]
- * @property {ValidationRule} [items]
- * @property {{[key: string]: ValidationRule}} [properties]
- * @property {number} [min]
- * @property {number} [max]
- * @property {ValidationRule} [not]
- * @property {Array<ValidationRule>} [and]
- * @property {Array<ValidationRule>} [or]
- * @property {Array<ValidationRule>} [xor]
- */
-
-/**
- * @param {any} value
- * @param {ValidationRule} rule
- * @returns {boolean}
- */
-exports.validate = function (value, rule) {
-    return rule && (rule.optional && _.isNull(value) || (
-        (!rule.type || (
-            _.isArray(rule.type)
-                ? rule.type.some(typeEntry => typeof value === typeEntry)
-                : typeof value === rule.type
-        ))
-        && (!rule.class || (
-            _.isArray(rule.class)
-                ? rule.class.some(classEntry => value instanceof classEntry)
-                : value instanceof rule.class
-        ))
-        && (!('value' in rule) || (
-            Object.is(value, rule.value)
-        ))
-        && (!rule.enum || (
-            rule.enum.some(entry => value === entry)
-        ))
-        && (!rule.pattern || (
-            _.isPrimitive(value) && rule.pattern.test(value)
-        ))
-        && (!rule.items || (
-            _.isArray(value) && value.every(
-                (item) => _.validate(item, rule.items)
-            )
-        ))
-        && (!rule.properties || (
-            _.isObject(value) && Object.entries(rule.properties).every(
-                ([key, subRule]) => !key && Object.values(value).every(subValue => _.validate(subValue, subRule))
-                    || _.validate(value[key], subRule)
-            )
-        ))
-        && (!('min' in rule) || (
-            _.isPrimitive(value) && value >= rule.min
-            || _.isNumber(value?.length) && value.length >= rule.min
-            || _.isObject(value) && Object.keys(value).length >= rule.min
-        ))
-        && (!('max' in rule) || (
-            _.isPrimitive(value) && value <= rule.max
-            || _.isNumber(value?.length) && value.length <= rule.max
-            || _.isObject(value) && Object.keys(value).length <= rule.max
-        ))
-        && (!rule.not || (
-            !_.validate(value, rule.not)
-        ))
-        && (!rule.and || (
-            rule.and.every(andRule => _.validate(value, andRule))
-        ))
-        && (!rule.or || (
-            rule.or.some(orRule => _.validate(value, orRule))
-        ))
-        && (!rule.xor || (
-            rule.xor.filter(xorRule => _.validate(value, xorRule)).length === 1
-        ))
-    ));
-}; // validate = function (value, rule)
-
-/**
  * @param {RegExp} pattern
  * @returns {function(string|any): boolean}
  * @constructor
@@ -162,7 +82,7 @@ exports.InstanceValidator = function (classFunction) {
  * @returns {function(any): boolean}
  * @constructor
  */
-exports.AlternativeValidator = function(alternatives) {
+exports.AlternativeValidator = function (alternatives) {
     _.assert(_.isArray(alternatives) && alternatives.every(_.isFunction), 'invalid alternatives');
 
     /**
@@ -174,6 +94,25 @@ exports.AlternativeValidator = function(alternatives) {
     }
 
     return alternativeValidator;
+};
+
+/**
+ * @param {function(any): boolean} validator
+ * @returns {function(null | any): boolean}
+ * @constructor
+ */
+exports.OptionalValidator = function (validator) {
+    _.assert(_.isFunction(validator), 'invalid validator');
+
+    /**
+     * @param {null | any} value
+     * @returns {boolean}
+     */
+    function optionalValidator(value) {
+        return _.isNull(value) || validator(value);
+    }
+
+    return optionalValidator;
 };
 
 //exports.SchemaValidator = function () {
