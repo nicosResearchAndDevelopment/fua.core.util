@@ -54,6 +54,15 @@ exports.toArray = function (value) {
 };
 
 /**
+ * Like toArray, this method converts any value to an array, but then freezes it afterwards.
+ * @param {undefined|boolean|number|string|symbol|null|Array|TypedArray|Iterable|Iterator|Object|function|any} value
+ * @returns {Array}
+ */
+exports.toFrozenArray = function (value) {
+    return Object.freeze(Array.isArray(value) ? [...value] : _.toArray(value));
+};
+
+/**
  * @param {Object} target
  * @param {...Object} sourceArr
  * @returns {Object}
