@@ -77,6 +77,20 @@ exports.InstanceValidator = function (classFunction) {
     return instanceValidator;
 };
 
+exports.DatatypeValidator = function (datatype) {
+    _.assert(_.isDatatype(datatype), 'invalid datatype');
+
+    /**
+     * @param {any} value
+     * @returns {boolean}
+     */
+    function datatypeValidator(value) {
+        return typeof value === datatype;
+    }
+
+    return datatypeValidator;
+};
+
 /**
  * @param {Array<function(any): boolean>} alternatives
  * @returns {function(any): boolean}

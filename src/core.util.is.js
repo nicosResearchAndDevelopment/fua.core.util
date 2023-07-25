@@ -138,7 +138,7 @@ exports.isString = function (value) {
 };
 
 /**
- * @param {Array<String>|any} value
+ * @param {Array<string>|any} value
  * @returns {boolean}
  */
 exports.isStringArray = function (value) {
@@ -252,4 +252,14 @@ exports.isBuffer = function (value) {
 exports.isTypedArray = function (value) {
     // TODO check and improve
     return ArrayBuffer.isView(value) && !(value instanceof DataView);
+};
+
+const _DatatypeList = Object.freeze(['undefined', 'boolean', 'number', 'bigint', 'string', 'symbol', 'object', 'function']);
+
+/**
+ * @param {'undefined'|'boolean'|'number'|'bigint'|'string'|'symbol'|'object'|'function'|any} value
+ * @returns {boolean}
+ */
+exports.isDatatype = function (value) {
+    return _DatatypeList.includes(value);
 };
