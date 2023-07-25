@@ -77,6 +77,11 @@ exports.InstanceValidator = function (classFunction) {
     return instanceValidator;
 };
 
+/**
+ * @param {'undefined'|'boolean'|'number'|'bigint'|'string'|'symbol'|'object'|'function'} datatype
+ * @returns {function(any): boolean}
+ * @constructor
+ */
 exports.DatatypeValidator = function (datatype) {
     _.assert(_.isDatatype(datatype), 'invalid datatype');
 
@@ -89,6 +94,25 @@ exports.DatatypeValidator = function (datatype) {
     }
 
     return datatypeValidator;
+};
+
+/**
+ * @param {Array<function(any): boolean>} concatenations
+ * @returns {function(any): boolean}
+ * @constructor
+ */
+exports.ConcatenationValidator = function (concatenations) {
+    _.assert(_.isArray(concatenations) && concatenations.every(_.isFunction), 'invalid concatenations');
+
+    /**
+     * @param {any} value
+     * @returns {boolean}
+     */
+    function concatenationValidator(value) {
+        return concatenations.every(validator => validator(value));
+    }
+
+    return concatenationValidator;
 };
 
 /**
@@ -128,78 +152,6 @@ exports.OptionalValidator = function (validator) {
 
     return optionalValidator;
 };
-
-//exports.SchemaValidator = function () {
-//    // TODO http://json-schema.org/specification.html
-//    const schema = {
-//        $schema:     null,
-//        $vocabulary: null,
-//        $id:         null,
-//        $ref:        null,
-//        $dynamicRef: null,
-//        $def:        null,
-//        $comment:    null,
-//        // subschemas with logic
-//        allOf: 'array of json schemas',
-//        anyOf: 'array of json schemas',
-//        oneOf: 'array of json schemas',
-//        not:   'json schema',
-//        // conditional subschemas
-//        if:               'json schema',
-//        then:             'json schema',
-//        else:             'json schema',
-//        dependentSchemas: null,
-//        // subschemas for arrays
-//        prefixItems: 'array of json schemas',
-//        items:       null,
-//        contains:    null,
-//        // subschemas for objects
-//        properties:           null,
-//        patternProperties:    null,
-//        additionalProperties: null,
-//        propertyNames:        null,
-//        // unevaluated locations
-//        unevaluatedItems:      null,
-//        unevaluatedProperties: null,
-//        // keywords for any instance type
-//        type:  'string|string[]',
-//        enum:  'string[]',
-//        const: 'any',
-//        // keywords for numeric instances
-//        multipleOf:       'number',
-//        maximum:          'number',
-//        exclusiveMaximum: 'number',
-//        minimum:          'number',
-//        exclusiveMinimum: 'number',
-//        // keywords for strings
-//        maxLength: 'number',
-//        minLength: 'number',
-//        pattern:   'string|RegExp',
-//        // keywords for arrays
-//        maxItems:    'number',
-//        minItems:    'number',
-//        uniqueItems: 'boolean',
-//        maxContains: 'number',
-//        minContains: 'number',
-//        // keywords for objects
-//        maxProperties:     'number',
-//        minProperties:     'number',
-//        required:          'string[]',
-//        dependentRequired: null,
-//        // other keywords
-//        format:           'string',
-//        contentEncoding:  'string',
-//        contentMediaType: 'string',
-//        contentSchema:    'string',
-//        // keywords for meta-data annotations
-//        title:      'string',
-//        default:    null,
-//        deprecated: 'boolean',
-//        readOnly:   'boolean',
-//        writeOnly:  'boolean',
-//        examples:   null
-//    };
-//};
 
 /**
  * @param {Object} subject
