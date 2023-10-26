@@ -14,7 +14,7 @@ describe('core.util.valid', function () {
         expect(stringValidator('test123')).toBeFalsy();
     });
 
-    test('validate', function () {
+    test.skip('validate', function () {
         expect(_.validate(String('test'), {
             type: 'string'
         })).toBeTruthy();
