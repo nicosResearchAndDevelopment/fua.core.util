@@ -13,8 +13,8 @@ Object.assign(exports, prop);
 const errors = require('./core.util.errors.js');
 Object.assign(exports, errors);
 
-const valid = require('./core.util.valid.js');
-Object.assign(exports, valid);
+// const valid = require('./core.util.valid.js');
+// Object.assign(exports, valid);
 
 // const assert = require('./core.util.Assert.js');
 // Object.assign(exports, assert);
@@ -49,7 +49,7 @@ module.exports = Object.freeze({
     ...link_is,
     ...prop,
     ...errors,
-    ...valid,
+    // ...valid,
     // ...assert,
     ...link_assert,
     ...convert,

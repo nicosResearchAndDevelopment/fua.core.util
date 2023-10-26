@@ -32,3 +32,28 @@ exports.isBuffer         = (value) => is.object.instance.buffer(value);
 exports.isTypedArray     = (value) => ArrayBuffer.isView(value) && !(value instanceof DataView);
 const _DatatypeList      = Object.freeze(['undefined', 'boolean', 'number', 'bigint', 'string', 'symbol', 'object', 'function']);
 exports.isDatatype       = (value) => _DatatypeList.includes(value);
+
+exports.StringValidator        = function (pattern) {
+    return is.validator.string(pattern);
+};
+exports.ArrayValidator         = function (checker) {
+    return is.validator.array(checker);
+};
+exports.EnumValidator          = function (choices) {
+    return is.validator.enum(choices);
+};
+exports.InstanceValidator      = function (classFunction) {
+    return is.validator.instance(classFunction);
+};
+exports.DatatypeValidator      = function (datatype) {
+    return is.validator.datatype(datatype);
+};
+exports.ConcatenationValidator = function (concatenations) {
+    return is.validator.concatenation(concatenations);
+};
+exports.AlternativeValidator   = function (alternatives) {
+    return is.validator.alternative(alternatives);
+};
+exports.OptionalValidator      = function (validator) {
+    return is.validator.optional(validator);
+};
