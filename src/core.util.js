@@ -31,6 +31,9 @@ Object.assign(exports, link_objects);
 const helper = require('./core.util.helper.js');
 Object.assign(exports, helper);
 
+const link_async = require('./link.core.async.js');
+Object.assign(exports, link_async);
+
 // const time = require('./core.util.time.js');
 // Object.assign(exports, time);
 
@@ -55,6 +58,7 @@ module.exports = Object.freeze({
     ...convert,
     ...link_objects,
     ...helper,
+    ...link_async,
     // ...time,
     ...link_ts,
     // ...logger
