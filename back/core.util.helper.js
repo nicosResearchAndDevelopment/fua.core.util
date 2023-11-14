@@ -56,3 +56,38 @@ exports.callbackify = function (fn) {
         return exports.callbacky.apply(this, args);
     };
 };
+
+/**
+ * @param {string} [errName="Error"]
+ * @param {string} [errCode='']
+ * @param {Function} [errInit]
+ * @returns {Function}
+ */
+exports.createErrorClass = function (errName = 'Error', errCode = '', errInit) {
+    const CustomError = function (message = '', ...args) {
+        if (!new .target) {
+            const that = new CustomError(message, ...args);
+            Error.captureStackTrace(that, CustomError);
+            return that;
+        }
+        Error.captureStackTrace(this, CustomError);
+        Object.defineProperties(this, {
+            message: {value: message}
+        });
+        if (errInit) errInit.apply(this, args);
+    }; // CustomError
+
+    CustomError.prototype = Object.create(Error.prototype);
+
+    Object.defineProperties(CustomError.prototype, {
+        constructor: {value: CustomError},
+        name:        {value: errName},
+        code:        {value: errCode}
+    });
+
+    Object.defineProperties(CustomError, {
+        name: {value: errName}
+    });
+
+    return CustomError;
+};
