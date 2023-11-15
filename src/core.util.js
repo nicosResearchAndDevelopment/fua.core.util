@@ -28,6 +28,9 @@ Object.assign(exports, link_assert);
 const convert = require('./core.util.convert.js');
 Object.assign(exports, convert);
 
+const link_strings = require('./link.core.strings.js');
+Object.assign(exports, link_strings);
+
 const link_objects = require('./link.core.objects.js');
 Object.assign(exports, link_objects);
 
@@ -60,6 +63,7 @@ module.exports = Object.freeze({
     // ...assert,
     ...link_assert,
     ...convert,
+    ...link_strings,
     ...link_objects,
     ...helper,
     ...link_async,
