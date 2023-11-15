@@ -39,9 +39,18 @@ describe('core.util.helper', function () {
     });
 
     test('extractType', function () {
-        console.log(_.extractType({test: ['hello', 123], lorem: 'ipsum', bool: true}));
-        console.log(_.extractType(new Set([123, 'hello', Symbol.hasInstance, BigInt(2)])));
-        console.log(_.extractType(new Map([['test', 123], ['hello', [1, 2, 3, 4]]])));
+        const obj = {test: ['hello', 123], lorem: 'ipsum', bool: true};
+        console.log(_.extractType(obj));
+        const set = new Set([123, 'hello', Symbol.hasInstance, BigInt(2)]);
+        console.log(_.extractType(set));
+        const map = new Map([['test', 123], ['hello', [1, 2, 3, 4]]]);
+        console.log(_.extractType(map));
+        const buffer = Buffer.from('test');
+        console.log(_.extractType(buffer));
+        const promise = Promise.resolve(123);
+        console.log(_.extractType(promise));
+        const iterator = new Set([1, 2, 3, 'test']).values();
+        console.log(_.extractType(iterator));
     });
 
     test('createErrorClass', function () {

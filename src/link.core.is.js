@@ -57,3 +57,5 @@ exports.AlternativeValidator   = function (alternatives) {
 exports.OptionalValidator      = function (validator) {
     return is.validator.optional(validator);
 };
+
+exports.extractType = (value) => is.analyse(value);
