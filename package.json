@@ -9,7 +9,7 @@
   "dependencies": {
     "@nrd/fua.core.assert": "^1.0.0",
     "@nrd/fua.core.async": "^1.0.0",
-    "@nrd/fua.core.is": "^1.0.2",
+    "@nrd/fua.core.is": "^1.0.3",
     "@nrd/fua.core.strings": "^1.0.0",
     "@nrd/fua.core.objects": "^1.0.1",
     "@nrd/fua.core.errors": "^1.0.0",
