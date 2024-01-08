@@ -1,7 +1,6 @@
 const
     {describe, test} = require('mocha'),
     expect           = require('expect'),
-    fetch            = require('node-fetch'),
     _                = require('../src/core.util.js');
 
 describe('core.util.errors', function () {
