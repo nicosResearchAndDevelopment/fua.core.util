@@ -30,8 +30,7 @@ exports.isRegExp         = (value) => value instanceof RegExp;
 exports.isError          = (value) => is.object.instance.error(value);
 exports.isBuffer         = (value) => is.object.instance.buffer(value);
 exports.isTypedArray     = (value) => ArrayBuffer.isView(value) && !(value instanceof DataView);
-const _DatatypeList      = Object.freeze(['undefined', 'boolean', 'number', 'bigint', 'string', 'symbol', 'object', 'function']);
-exports.isDatatype       = (value) => _DatatypeList.includes(value);
+exports.isDatatype       = (value) => is.string.datatype(value);
 
 exports.StringValidator        = function (pattern) {
     return is.validator.string(pattern);
