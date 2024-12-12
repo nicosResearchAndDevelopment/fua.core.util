@@ -1,1 +1,1 @@
-# @nrd/fua.core.util
+# @fua/core.util
